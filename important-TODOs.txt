@@ -1,0 +1,3 @@
+UML:
+-Change neighborsTable to LIST_OF_PEERS
+-Implement the Files cleaning if it's last update date is old
