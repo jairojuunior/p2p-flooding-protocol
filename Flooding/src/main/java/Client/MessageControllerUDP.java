@@ -78,6 +78,14 @@ public class MessageControllerUDP {
 	
 	//Start the request of the file by TCP
 	public void startRequest(JSONObject message) {
-		//needs implementation
+		JSONArray fromArray = message.getJSONArray("from");
+		String peerIP = fromArray.getString(0);
+		String peerPort = fromArray.getString(1); //verify if the port is the UDP or TCP
+		String peerName = fromArray.getString(2);
+		String fileName = message.getString("fileName");
+		String filePath = "C:\\Users\\lucas\\Desktop\\FloodingTestClient\\" + fileName;
+		
+		ClientTCP clientTCPThread = new ClientTCP(peerIP, peerPort, peerName, fileName, filePath);
+		clientTCPThread.start();
 	}
 }
