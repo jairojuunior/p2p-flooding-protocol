@@ -22,7 +22,7 @@ import java.net.Socket;
  */
 public class ServerTCP extends Thread {
 	// Size of the buffer used to send file
-	private final int fileBufferSize = 8192;
+	private final int fileBufferSize;
 	
 	// Port used to transfer the file
 	private String port;
@@ -38,6 +38,8 @@ public class ServerTCP extends Thread {
 	
 	public ServerTCP(String port) {
 		this.port = port;
+		//problem when peerDAO is null
+		PeerDAO peerDAO = PeerDAO.getInstance();
 	}
 	
     public void run() {
@@ -53,7 +55,9 @@ public class ServerTCP extends Thread {
     			receiveRequest();
     			System.out.println(fileName + " download requested");
     			
-    			filePath = "C:\\Users\\lucas\\Desktop\\FloodingTestServer\\" + fileName;
+    			fileBufferSize = (peerDAO.myFileTable.get(fileName).getSize()) * 11 / 10;
+			//filePath = "C:\\Users\\lucas\\Desktop\\FloodingTestServer\\" + fileName;
+			filePath = peerDAO.myFileTable.get(fileName).getFullPath();
     			
     			sendFile();
     			System.out.println(fileName + " download finished");
