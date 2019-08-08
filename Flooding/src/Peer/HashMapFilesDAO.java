@@ -26,7 +26,7 @@ public class HashMapFilesDAO{
     /*DAO CRUD (Create, Read (get), Update, Delete)*/
     public void create(String IP, String port, String name, String fileName, 
             String fullPath, int size){
-        String key = (IP+port+name+fullPath);
+        String key = (fileName);
         Date lastUpdateTimestamp = new Date();
         File filetable = new File(IP, port, name, lastUpdateTimestamp, fileName, fullPath, size);
         
@@ -98,7 +98,7 @@ class File{
         this.fileName = fileName;
     }
     public String getFullPath(){
-        return this.fileName;
+        return this.fullPath;
     }    
     public void setFullPath(String fullPath){
         this.fullPath = fullPath;

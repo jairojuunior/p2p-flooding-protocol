@@ -3,43 +3,40 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Peer;
+package Client;
 
-import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+
 /**
  *
  * @author Jairo
  */
 public class Main {
-
-    /**
-     * @param args the command line arguments
-     * @throws java.io.IOException
-     */
-    public static void main(String[] args) throws IOException, Exception {
-        
-        PeerDAO DAO = PeerDAO.getInstance();
-        
-        PeerDAO.IP = "127.0.0.1";
-        PeerDAO.port = "10001";
-        PeerDAO.name = "Peer1";
-        PeerDAO.MAX_TTL = 3;
+    public static JSONObject LIST_OF_PEERS;
+    public static void main(String[] args) throws Exception {
+        // commmand line myIP myPort myName filename
+        JSONArray LIST_OF_PEERS = readJSON("C:\\Users\\Jairo\\codes\\ufabc-sd\\simple-flooding-protocol\\Flooding\\values\\listOfPeers.json").getJSONArray("peers"); 
         /*
-        PeerDAO.IP = args[0];
-        PeerDAO.port = args[1];
-        PeerDAO.name = args[2];*/
+        String IP = args[0];
+        String port = args[1];
+        String name = args[2];
+        String filename = args[3];
+        */
+        String IP = "127.0.0.1";
+        String port = "9998";
+        String name = "Client1";
+        String filename = "test.txt";
         
-        ListenerUDP listener = new ListenerUDP(PeerDAO.IP, PeerDAO.port);
-        listener.start();
-        System.out.println("Peer listening via UDP at: "+PeerDAO.IP+":"+PeerDAO.port+"("+PeerDAO.name+")");
-        while(true){
-            
-        }
+        System.out.println("Client listening via UDP at: "+IP+":"+port+"("+name+")");
+        System.out.println("File to be searched: "+filename);
+
+        SenderUDP sender = new SenderUDP(IP, port, name, filename, LIST_OF_PEERS);
+        sender.start();
     }
     public static String readFileAsString(String fileName)throws Exception{ 
         String data = ""; 
@@ -54,5 +51,4 @@ public class Main {
         
         return object;
     }
-    
 }

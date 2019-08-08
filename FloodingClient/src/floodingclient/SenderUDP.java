@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Client;
+package floodingclient;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -64,7 +64,6 @@ public class SenderUDP extends Thread{
 
     private String serializeData(String IP, String port, String name, String filename) {
         JSONObject json = new JSONObject();
-        
         json.put("ip", IP);
         json.put("port", port);
         json.put("peer", name);

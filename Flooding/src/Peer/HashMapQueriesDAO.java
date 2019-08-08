@@ -23,10 +23,9 @@ public class HashMapQueriesDAO {
     private Map <String, Query> HashMap = Collections.synchronizedMap(new HashMap<String, Query>());
     
     /*DAO CRUD (Create, Read (get), Update, Delete)*/
-    public void create(String IP, String port, String name, String fileName, String fullPath,
-            Date senderTimestamp, int blackListStartCountdown){
-        String key = (IP+port+name+fullPath);
-        Query query = new Query(IP, port, name, fileName, fullPath, senderTimestamp, blackListStartCountdown);
+    public void create(String IP, String port, String name, String fileName, int blackListStartCountdown){
+        String key = (IP+port+fileName);
+        Query query = new Query(IP, port, name, fileName, blackListStartCountdown);
         
         HashMap.put(key, query);
     }
@@ -59,17 +58,13 @@ class Query{
     private final String port;
     private final String name;
     private final String fileName;
-    private final String fullPath;
     private int blacklistCountdown;
-    private final Date senderTimestamp;
     
-    public Query(String IP, String port, String name, String fileName, String fullPath, Date senderTimestamp, int blackListStartCountdown){
+    public Query(String IP, String port, String name, String fileName, int blackListStartCountdown){
         this.IP = IP;
         this.port = port;
         this.name = name;
         this.fileName = fileName;
-        this.fullPath = fullPath;
-        this.senderTimestamp = senderTimestamp;
         this.blacklistCountdown = blackListStartCountdown;
     }
     
@@ -83,14 +78,8 @@ class Query{
     public String getName(){
         return this.name;
     }
-    public Date getSenderTimestamp(){
-        return this.senderTimestamp;
-    }
     public String getFileName(){
         return this.fileName;
-    }    
-    public String getFullPath(){
-        return this.fullPath;
     }    
     public int getBlacklistCount(){
         return this.blacklistCountdown;
